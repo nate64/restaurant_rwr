@@ -1,42 +1,42 @@
-class Api::ProductsController < ApplicationController
-  before_action :set_menu_items, only: [:show, :update, :destroy]
+class Api::MenuItemsController < ApplicationController
+  before_action :set_menu, only: [:show, :update, :destroy]
 
   def index
-    render json: Menu_items.all
+    render json: Menu.all
   end
 
   def show
-    render json: @menu_items
+    render json: @menu
   end
 
   def create
-    menu_item = Menu_item.new(product_params)
+    menu = Menu.new(menu_params)
 
-    if menu_item.save
-      render json: menu_item
+    if menu.save
+      render json: menu
     else
-      render json: menu_item.errors, status: 422
+      render json: menu.errors, status: 422
     end
   end
 
   def update
-    if @menu_item.update(menu_item_params)
-      render json: @menu_item
+    if @menu.update(menu_params)
+      render json: @menu
     else
-      render json: @menu_item.errors, status: 422
+      render json: @menu.errors, status: 422
     end
   end
 
   def destroy
-    @menu_item.destroy
+    @menu.destroy
   end
 
   private
-    def set_menu_items
-      @menu_item = Menu_item.find(params[:id])
+    def set_menu
+      @menu = Menu.find(params[:id])
     end
 
-    def menu_item_params
-      params.require(:menu_item).permit(:name, :description, :price)
+    def menu_params
+      params.require(:menu).permit(:name, :description, :price)
     end
 end
